@@ -1,0 +1,114 @@
+CREATE DATABASE 07Aug;
+Query OK, 1 row affected (0.02 sec)
+
+USE 07Aug;
+Database changed
+CREATE TABLE Department(
+    -> Dep_ID INT PRIMARY KEY,
+    -> Dep_Name VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+CREATE TABLE Student(
+    -> Stud_ID INT PRIMARY KEY,
+    -> Stud_Name VARCHAR(50),
+    -> Age INT,
+    -> Email VARCHAR(50),
+    -> Dep_ID INT
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+mysql> INSERT INTO Department VALUES
+    -> (101, 'CS'),
+    -> (102, 'IT'),
+    -> (103, 'EC'),
+    -> (106, 'CSR');
+Query OK, 4 rows affected (0.02 sec)
+Records: 4  Duplicates: 0  Warnings: 0
+
+mysql> INSERT INTO Student VALUES
+    -> (1, 'Amit', 32, 'amit@gmail.com', 101),
+    -> (2, 'Megha', 45, 'megha@gmail.com', 102),
+    -> (3, 'Sneha', 34, 'sneha@gmail.com', 103),
+    -> (4, 'Neha', 23, 'neha@gmail.com', 104),
+    -> (5, 'Riya', 22, 'riya@gmail.com', 105),
+    -> (6, 'Shraddha', 25, 'shraddha@gmail.com', 106);
+Query OK, 6 rows affected (0.01 sec)
+Records: 6  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM Department;
++--------+----------+
+| Dep_ID | Dep_Name |
++--------+----------+
+|    101 | CS       |
+|    102 | IT       |
+|    103 | EC       |
+|    106 | CSR      |
++--------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT *FROM Student;
++---------+-----------+------+--------------------+--------+
+| Stud_ID | Stud_Name | Age  | Email              | Dep_ID |
++---------+-----------+------+--------------------+--------+
+|       1 | Amit      |   32 | amit@gmail.com     |    101 |
+|       2 | Megha     |   45 | megha@gmail.com    |    102 |
+|       3 | Sneha     |   34 | sneha@gmail.com    |    103 |
+|       4 | Neha      |   23 | neha@gmail.com     |    104 |
+|       5 | Riya      |   22 | riya@gmail.com     |    105 |
+|       6 | Shraddha  |   25 | shraddha@gmail.com |    106 |
++---------+-----------+------+--------------------+--------+
+6 rows in set (0.00 sec)
+
+mysql> SELECT Student.Stud_ID, Student.Stud_Name, Department.Dep_Name FROM Student INNER JOIN Department ON Student.Dep_ID = Department.Dep_ID;
++---------+-----------+----------+
+| Stud_ID | Stud_Name | Dep_Name |
++---------+-----------+----------+
+|       1 | Amit      | CS       |
+|       2 | Megha     | IT       |
+|       3 | Sneha     | EC       |
+|       6 | Shraddha  | CSR      |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Student.Stud_ID, Student.Stud_Name, Department.Dep_Name FROM Student, Department WHERE Student.Dep_ID = Department.Dep_ID;
++---------+-----------+----------+
+| Stud_ID | Stud_Name | Dep_Name |
++---------+-----------+----------+
+|       1 | Amit      | CS       |
+|       2 | Megha     | IT       |
+|       3 | Sneha     | EC       |
+|       6 | Shraddha  | CSR      |
++---------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> SELECT Department.Dep_Name, COUNT(Student.Stud_ID) AS Total_Students FROM Student, Department WHERE Student.Dep_ID = Department.Dep_ID GROUP BY Department.Dep_Name;
++----------+----------------+
+| Dep_Name | Total_Students |
++----------+----------------+
+| CS       |              1 |
+| IT       |              1 |
+| EC       |              1 |
+| CSR      |              1 |
++----------+----------------+
+4 rows in set (0.02 sec)
+
+mysql> SELECT Department.Dep_Name, SUM(Student.Age) AS Total_Age FROM Student, Department WHERE Student.Dep_ID = Department.Dep_ID GROUP BY Department.Dep_Name;
++----------+-----------+
+| Dep_Name | Total_Age |
++----------+-----------+
+| CS       |        32 |
+| IT       |        45 |
+| EC       |        34 |
+| CSR      |        25 |
++----------+-----------+
+4 rows in set (0.01 sec)
+
+mysql> SELECT Department.Dep_Name, MAX(Student.Age) AS Maximum_Age FROM Student, Department WHERE Student.Dep_ID = Department.Dep_ID GROUP BY Department.Dep_Name;
++----------+-------------+
+| Dep_Name | Maximum_Age |
++----------+-------------+
+| CS       |          32 |
+| IT       |          45 |
+| EC       |          34 |
+| CSR      |          25 |
++----------+-------------+
+4 rows in set (0.00 sec)
