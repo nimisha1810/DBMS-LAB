@@ -1,0 +1,129 @@
+USE college;
+Database changed
+mysql> CREATE TABLE Marks (
+    -> Stud_ID INT PRIMARY KEY,
+    -> Rollno INT,
+    -> Math_marks DECIMAL(5,2),
+    -> Physics_marks DECIMAL(5,2),
+    -> Chemistry_marks DECIMAL(5,2),
+    -> Attendance DECIMAL(5,2),
+    -> Fee_paid DECIMAL(8,2)
+    -> );
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> INSERT INTO Marks VALUES
+    -> (1, 101, 85.75, 78.50, 91.25, 87.60, 45000.00),
+    -> (2, 102, 72.40, 81.75, 68.50, 91.30, 42500.00),
+    -> (3, 103, 94.60, 88.25, 89.75, 95.80, 50000.00),
+    -> (4, 104, 65.35, 70.80, 74.45, 82.40, 38500.00),
+    -> (5, 105, 79.90, 85.60, 80.30, 89.75, 41000.00);
+Query OK, 5 rows affected (0.02 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *FROM Marks;
++---------+--------+------------+---------------+-----------------+------------+----------+
+| Stud_ID | Rollno | Math_marks | Physics_marks | Chemistry_marks | Attendance | Fee_paid |
++---------+--------+------------+---------------+-----------------+------------+----------+
+|       1 |    101 |      85.75 |         78.50 |           91.25 |      87.60 | 45000.00 |
+|       2 |    102 |      72.40 |         81.75 |           68.50 |      91.30 | 42500.00 |
+|       3 |    103 |      94.60 |         88.25 |           89.75 |      95.80 | 50000.00 |
+|       4 |    104 |      65.35 |         70.80 |           74.45 |      82.40 | 38500.00 |
+|       5 |    105 |      79.90 |         85.60 |           80.30 |      89.75 | 41000.00 |
++---------+--------+------------+---------------+-----------------+------------+----------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT Stud_ID, Math_marks, ROUND(Math_marks, 1) AS rounded_marks FROM Marks;
++---------+------------+---------------+
+| Stud_ID | Math_marks | rounded_marks |
++---------+------------+---------------+
+|       1 |      85.75 |          85.8 |
+|       2 |      72.40 |          72.4 |
+|       3 |      94.60 |          94.6 |
+|       4 |      65.35 |          65.4 |
+|       5 |      79.90 |          79.9 |
++---------+------------+---------------+
+5 rows in set (0.02 sec)
+
+mysql> SELECT MAX(Math_marks) AS maximum_Math_marks FROM Marks;
++--------------------+
+| maximum_Math_marks |
++--------------------+
+|              94.60 |
++--------------------+
+1 row in set (0.02 sec)
+
+mysql> SELECT MIN(Physics_marks) AS minimum_Physics_marks FROM Marks;
++-----------------------+
+| minimum_Physics_marks |
++-----------------------+
+|                 70.80 |
++-----------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT MIN(Math_marks) AS minimum_Math_marks FROM Marks;
++--------------------+
+| minimum_Math_marks |
++--------------------+
+|              65.35 |
++--------------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT Rollno, MOD(Rollno, 2) AS remainder FROM Marks;
++--------+-----------+
+| Rollno | remainder |
++--------+-----------+
+|    101 |         1 |
+|    102 |         0 |
+|    103 |         1 |
+|    104 |         0 |
+|    105 |         1 |
++--------+-----------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT Stud_ID, Fee_paid, TRUNCATE(Fee_paid, 2) AS truncated_fee FROM Marks;
++---------+----------+---------------+
+| Stud_ID | Fee_paid | truncated_fee |
++---------+----------+---------------+
+|       1 | 45000.00 |      45000.00 |
+|       2 | 42500.00 |      42500.00 |
+|       3 | 50000.00 |      50000.00 |
+|       4 | 38500.00 |      38500.00 |
+|       5 | 41000.00 |      41000.00 |
++---------+----------+---------------+
+5 rows in set (0.00 sec)
+
+mysql> SELECT Stud_ID, Rollno, POWER(Rollno, 2) AS roll_square FROM Marks;
++---------+--------+-------------+
+| Stud_ID | Rollno | roll_square |
++---------+--------+-------------+
+|       1 |    101 |       10201 |
+|       2 |    102 |       10404 |
+|       3 |    103 |       10609 |
+|       4 |    104 |       10816 |
+|       5 |    105 |       11025 |
++---------+--------+-------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT Stud_ID, Attendance, FLOOR(Attendance) AS floor_Attendance FROM Marks;
++---------+------------+------------------+
+| Stud_ID | Attendance | floor_Attendance |
++---------+------------+------------------+
+|       1 |      87.60 |               87 |
+|       2 |      91.30 |               91 |
+|       3 |      95.80 |               95 |
+|       4 |      82.40 |               82 |
+|       5 |      89.75 |               89 |
++---------+------------+------------------+
+5 rows in set (0.01 sec)
+
+mysql> SELECT Stud_ID, Attendance, CEILING(Attendance) AS ceiling_Attendance FROM Marks;
++---------+------------+--------------------+
+| Stud_ID | Attendance | ceiling_Attendance |
++---------+------------+--------------------+
+|       1 |      87.60 |                 88 |
+|       2 |      91.30 |                 92 |
+|       3 |      95.80 |                 96 |
+|       4 |      82.40 |                 83 |
+|       5 |      89.75 |                 90 |
++---------+------------+--------------------+
+5 rows in set (0.01 sec)
