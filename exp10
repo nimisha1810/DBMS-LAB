@@ -1,0 +1,157 @@
+ CREATE DATABASE EmployeeDB;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> USE EmployeeDB;
+Database changed
+mysql> CREATE TABLE Employee (
+    ->     EmpID INT PRIMARY KEY,
+    ->     EmpName VARCHAR(50),
+    ->     Department VARCHAR(50),
+    ->     Salary DECIMAL(10,2),
+    ->     City VARCHAR(50)
+    -> );
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> INSERT INTO Employee (EmpID, EmpName, Department, Salary, City)
+    -> VALUES
+    -> (1, 'Amit Sharma', 'IT', 45000, 'Jaipur'),
+    -> (2, 'Rahul Verma', 'HR', 35000, 'Delhi'),
+    -> (3, 'Priya Singh', 'IT', 50000, 'Mumbai'),
+    -> (4, 'Neha Gupta', 'Finance', 40000, 'Jaipur'),
+    -> (5, 'Raj Mehta', 'HR', 30000, 'Delhi'),
+    -> (6, 'Anjali Jain', 'IT', 55000, 'Pune'),
+    -> (7, 'Vikas Kumar', 'Sales', 38000, 'Mumbai'),
+    -> (8, 'Sneha Patel', 'Finance', 42000, 'Ahmedabad'),
+    -> (9, 'Rohit Yadav', 'IT', 60000, 'Jaipur'),
+    -> (10, 'Pooja Agarwal', 'HR', 36000, 'Pune'),
+    -> (11, 'Karan Malhotra', 'Sales', 41000, 'Delhi'),
+    -> (12, 'Simran Kaur', 'IT', 52000, 'Chandigarh'),
+    -> (13, 'Arjun Joshi', 'Finance', 47000, 'Jaipur'),
+    -> (14, 'Kavita Rao', 'HR', 33000, 'Mumbai'),
+    -> (15, 'Manish Saini', 'IT', 58000, 'Delhi'),
+    -> (16, 'Divya Nair', 'Sales', 39000, 'Pune'),
+    -> (17, 'Suresh Reddy', 'Finance', 46000, 'Hyderabad'),
+    -> (18, 'Meera Shah', 'IT', 62000, 'Ahmedabad'),
+    -> (19, 'Nitin Bansal', 'HR', 37000, 'Jaipur'),
+    -> (20, 'Isha Kapoor', 'Sales', 43000, 'Chandigarh');
+Query OK, 20 rows affected (0.02 sec)
+Records: 20  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM Employee;
++-------+----------------+------------+----------+------------+
+| EmpID | EmpName        | Department | Salary   | City       |
++-------+----------------+------------+----------+------------+
+|     1 | Amit Sharma    | IT         | 45000.00 | Jaipur     |
+|     2 | Rahul Verma    | HR         | 35000.00 | Delhi      |
+|     3 | Priya Singh    | IT         | 50000.00 | Mumbai     |
+|     4 | Neha Gupta     | Finance    | 40000.00 | Jaipur     |
+|     5 | Raj Mehta      | HR         | 30000.00 | Delhi      |
+|     6 | Anjali Jain    | IT         | 55000.00 | Pune       |
+|     7 | Vikas Kumar    | Sales      | 38000.00 | Mumbai     |
+|     8 | Sneha Patel    | Finance    | 42000.00 | Ahmedabad  |
+|     9 | Rohit Yadav    | IT         | 60000.00 | Jaipur     |
+|    10 | Pooja Agarwal  | HR         | 36000.00 | Pune       |
+|    11 | Karan Malhotra | Sales      | 41000.00 | Delhi      |
+|    12 | Simran Kaur    | IT         | 52000.00 | Chandigarh |
+|    13 | Arjun Joshi    | Finance    | 47000.00 | Jaipur     |
+|    14 | Kavita Rao     | HR         | 33000.00 | Mumbai     |
+|    15 | Manish Saini   | IT         | 58000.00 | Delhi      |
+|    16 | Divya Nair     | Sales      | 39000.00 | Pune       |
+|    17 | Suresh Reddy   | Finance    | 46000.00 | Hyderabad  |
+|    18 | Meera Shah     | IT         | 62000.00 | Ahmedabad  |
+|    19 | Nitin Bansal   | HR         | 37000.00 | Jaipur     |
+|    20 | Isha Kapoor    | Sales      | 43000.00 | Chandigarh |
++-------+----------------+------------+----------+------------+
+20 rows in set (0.00 sec)
+
+mysql> CREATE OR REPLACE VIEW IT_Employees AS
+    -> SELECT EmpID, EmpName, Salary, City
+    -> FROM Employee
+    -> WHERE Department = 'IT';
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> SELECT * FROM IT_Employees;
++-------+--------------+----------+------------+
+| EmpID | EmpName      | Salary   | City       |
++-------+--------------+----------+------------+
+|     1 | Amit Sharma  | 45000.00 | Jaipur     |
+|     3 | Priya Singh  | 50000.00 | Mumbai     |
+|     6 | Anjali Jain  | 55000.00 | Pune       |
+|     9 | Rohit Yadav  | 60000.00 | Jaipur     |
+|    12 | Simran Kaur  | 52000.00 | Chandigarh |
+|    15 | Manish Saini | 58000.00 | Delhi      |
+|    18 | Meera Shah   | 62000.00 | Ahmedabad  |
++-------+--------------+----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE INDEX idx_department
+    -> ON Employee(Department);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *
+    -> FROM Employee
+    -> WHERE Department = 'IT';
++-------+--------------+------------+----------+------------+
+| EmpID | EmpName      | Department | Salary   | City       |
++-------+--------------+------------+----------+------------+
+|     1 | Amit Sharma  | IT         | 45000.00 | Jaipur     |
+|     3 | Priya Singh  | IT         | 50000.00 | Mumbai     |
+|     6 | Anjali Jain  | IT         | 55000.00 | Pune       |
+|     9 | Rohit Yadav  | IT         | 60000.00 | Jaipur     |
+|    12 | Simran Kaur  | IT         | 52000.00 | Chandigarh |
+|    15 | Manish Saini | IT         | 58000.00 | Delhi      |
+|    18 | Meera Shah   | IT         | 62000.00 | Ahmedabad  |
++-------+--------------+------------+----------+------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE INDEX idx_salary
+    -> ON Employee(Salary);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> SELECT *
+    -> FROM Employee
+    -> WHERE Salary > 45000;
++-------+--------------+------------+----------+------------+
+| EmpID | EmpName      | Department | Salary   | City       |
++-------+--------------+------------+----------+------------+
+|    17 | Suresh Reddy | Finance    | 46000.00 | Hyderabad  |
+|    13 | Arjun Joshi  | Finance    | 47000.00 | Jaipur     |
+|     3 | Priya Singh  | IT         | 50000.00 | Mumbai     |
+|    12 | Simran Kaur  | IT         | 52000.00 | Chandigarh |
+|     6 | Anjali Jain  | IT         | 55000.00 | Pune       |
+|    15 | Manish Saini | IT         | 58000.00 | Delhi      |
+|     9 | Rohit Yadav  | IT         | 60000.00 | Jaipur     |
+|    18 | Meera Shah   | IT         | 62000.00 | Ahmedabad  |
++-------+--------------+------------+----------+------------+
+8 rows in set (0.01 sec)
+
+mysql> SHOW INDEX FROM Employee;
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| Table    | Non_unique | Key_name       | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment | Visible | Expression |
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+| employee |          0 | PRIMARY        |            1 | EmpID       | A         |          20 |     NULL |   NULL |      | BTREE      |         |               | YES     | NULL       |
+| employee |          1 | idx_department |            1 | Department  | A         |           4 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
+| employee |          1 | idx_salary     |            1 | Salary      | A         |          20 |     NULL |   NULL | YES  | BTREE      |         |               | YES     | NULL       |
++----------+------------+----------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+---------+------------+
+3 rows in set (0.02 sec)
+
+mysql> SELECT DATABASE();
++------------+
+| DATABASE() |
++------------+
+| employeedb |
++------------+
+1 row in set (0.00 sec)
+
+mysql> SELECT COUNT(*) AS Total_Employees
+    -> FROM Employee;
++-----------------+
+| Total_Employees |
++-----------------+
+|              20 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql>
